@@ -1,0 +1,492 @@
+<html>
+    <head>
+		<script type="text/javascript" src="serenix_css_box_model.js"></script> 
+		<script type="text/javascript" src="serenix_css_base.js"></script> 
+		<script type="text/javascript" src="serenix_html_utils.js"></script>
+		<script type="text/javascript" src="serenix_keyboard_events.js"></script>
+		<script type="text/javascript" src="serenix_base_survey.js"></script>
+		<script type="text/javascript" src="serenix_text_survey.js"></script>
+        <script type="text/javascript" src="serenix_survey.js"></script> 
+		<script type="text/javascript" src="serenix_surveys.js"></script> 
+		<script type="text/javascript" src="JSON_serializer.js"></script> 
+		<style type="text/css">
+			table {			    
+				border-collapse:collapse;
+			}
+			td, th {
+				padding:5px;
+			}
+			th.option-value {
+				border: 1px black solid;
+			}
+			td.question-text,
+			td.question-text-combo {
+				border: 1px black solid;
+			}
+			td.question-action,
+			td.question-remove {
+				border: 1px black solid;
+			}
+		    td.question-option {
+			    text-align:center;
+				border: 1px black solid;
+			}
+			tr.odd {
+				background:#eeeeee;
+			}
+			.SereniX-survey-label {
+			    padding:5px;
+				margin:5px;
+				margin-top:10px;
+				background-color:pink;
+				border-radius:5px;
+				text-align:"center";
+				font-weight: bold;
+				font-size:20pt;
+			}
+			.SereniX-survey-help {
+				padding: 10px;
+				border-radius:10px;
+				border:1px solid lightgray;
+				font-size:12pt;
+				margin: 10px;
+			}
+			.SereniX-surveys-nav {				
+				text-align: right;
+				background-color: #fff;
+				border-radius:5px;
+				padding: 5px;
+				margin:10px;
+				/*border:1px solid black;*/
+			}
+			
+			.SereniX-surveys-nav.left {
+				text-align: left;
+			}
+			.SereniX-surveys-nav.center {
+				text-align: center;
+			}
+			.SereniX-surveys-nav.right {
+				text-align: right;
+			}
+			.SereniX-surveys-nav span,
+			.SereniX-surveys-nav .button,
+			.SereniX-surveys-nav .SereniX-button {
+				padding: 5px;
+				margin:5px;
+				border-radius:5px;
+				background-color:lightgray;				
+			}
+			.SereniX-button {
+				padding: 5px;
+				padding-left:10px;
+				padding-right:10px;
+				margin:5px;
+				border-radius:5px;
+				background-color:lightgray;				
+			}
+			.SereniX-steps ul {
+			    list-style-type:none;
+			}
+			.SereniX-steps ul li {
+			    float:left;
+			}
+			.SereniX-steps .survey-step {
+				text-decoration:none;
+				margin:5px;
+				padding:5px;
+				border-radius:10px;
+				width:40px;
+				color:black;
+			}
+			
+			.SereniX-steps {
+				margin:10px;
+				height: 30px;
+				position:relative;
+			}
+			
+			.SereniX-steps .survey-step.inactive {
+				background-color:lightgray;
+			}
+			.SereniX-steps .survey-step.active {
+				background-color:gray;
+				font-weight:bold;
+				border: 2px solid red;
+			}
+			.SereniX-command {
+				margin:10px;
+			}
+			.SereniX-button.submit {
+				color:white;
+				background-color: blue;
+			}
+			.SereniX-button.quest-remove {
+			    color:white;
+				background-color: green;
+			}
+			
+			ul.inline-checklist li {
+				float: left;
+			}
+		</style>
+    </head>
+    <body>
+        <script type="text/javascript">
+		var s1 = {"What programming languages do you know?":[{"language":"Javascript","experience":"More then five years"},{"language":"Java","experience":"More then five years"},{"language":"Python","experience":"From three to five years"},{"language":"CSS","experience":"More then five years"},{"language":"PHP","experience":"More then five years"},{"language":"Ruby","experience":"One year or less"}],"Compétences acquises":{"Marc KAMGA Olivier":{"Javascript":"A","Java":"B","Python":"C","CSS":"B","PHP":"B","Html":"A"},"DAMTCHOU W.":{"Javascript":"C","Java":"B","Python":"C","CSS":"C","PHP":"A","Html":"C"},"MBATCHOU Eric":{"Javascript":"D","Java":"A","Python":"A","CSS":"B","PHP":"C","Html":"C"},"TSAGUE Faustin":{"Javascript":"A","Java":"A","Python":"A","CSS":"B","PHP":"A","Html":"A"},"MEKUEKO Isaac":{"Javascript":"D","Java":"B","Python":"B","CSS":"A","PHP":"B","Html":"C"},"KAMDOUM Charles":{"Javascript":"C","Java":"D","Python":"E","CSS":"C","PHP":"D","Html":"D"},"LAH Faustin":{"Javascript":"A","Java":"A","Python":"A","CSS":"A","PHP":"A","Html":"A"}},"Courses":{"Maths":"A","PCT":"B","SVT":"D","EPS":"C"},"Resources":["S","J","E","J","J","S","E"],"Functional traffic lights":[{"quarter":"Bonanjo","colors":{"R":true,"G":true,"Y":true}},{"quarter":"Ndokoti","colors":{"R":false,"G":true,"Y":false}}],"Compétences (combobox)":{"js":"B","ts":"A","py":"A","php":"A","sql":"A","java":"C","C#":"A","C++":"C","C":"A"}};
+
+		var s2 = {
+			"What programming languages do you know?": [
+				{
+					"language": "Javascript",
+					"experience": "More then five years"
+				},
+				{
+					"language": "Html",
+					"experience": "More then five years"
+				},
+				{
+					"language": "Java",
+					"experience": "More then five years"
+				},
+				{
+					"language": "Python",
+					"experience": "From one two three years"
+				},
+				{
+					"language": "CSS",
+					"experience": "More then five years"
+				},
+				{
+					"language": "PHP",
+					"experience": "From three to five years"
+				},
+				{
+					"language": "Ruby",
+					"experience": "One year or less"
+				}
+			],
+			"Compétences acquises": {
+				"Marc KAMGA Olivier": {
+					"Javascript": "A",
+					"Java": "B",
+					"Python": "C",
+					"CSS": "A",
+					"PHP": "A",
+					"Html": "A"
+				},
+				"DAMTCHOU W.": {
+					"Javascript": "C",
+					"Java": "B",
+					"Python": "C",
+					"CSS": "C",
+					"PHP": "A",
+					"Html": "C"
+				},
+				"MBATCHOU Eric": {
+					"Javascript": "D",
+					"Java": "A",
+					"Python": "A",
+					"CSS": "A",
+					"PHP": "A",
+					"Html": "C"
+				},
+				"TSAGUE Faustin": {
+					"Javascript": "D",
+					"Java": "D",
+					"Python": "D",
+					"CSS": "D",
+					"PHP": "E",
+					"Html": "C"
+				},
+				"MEKUEKO Isaac": {
+					"Javascript": "C",
+					"Java": "B",
+					"Python": "E",
+					"CSS": "C",
+					"PHP": "C",
+					"Html": "C"
+				},
+				"KAMDOUM Charles": {
+					"Javascript": "A",
+					"Java": "A",
+					"Python": "A",
+					"CSS": "A",
+					"PHP": "A",
+					"Html": "A"
+				},
+				"LAH Faustin": {
+					"Javascript": "A",
+					"Java": "E",
+					"Python": "D",
+					"CSS": "A",
+					"PHP": "C",
+					"Html": "C"
+				}
+			},
+			"Courses": {
+				"Maths": "A",
+				"PCT": "B",
+				"SVT": "D",
+				"EPS": "C"
+			},
+			"Resources": [
+				"E",
+				"J",
+				"J",
+				"S",
+				"J",
+				"E",
+				"J"
+			],
+			"Functional traffic lights": [
+				{
+					"quarter": "Bonanjo",
+					"colors": {
+						"R": true,
+						"G": true,
+						"Y": false
+					}
+				},
+				{
+					"quarter": "Ndokoti",
+					"colors": {
+						"R": false,
+						"G": true,
+						"Y": false
+					}
+				}
+			],
+			"Compétences (combobox)": {
+				"js": "A",
+				"ts": "D",
+				"py": "C",
+				"php": "B",
+				"sql": "A",
+				"java": "A",
+				"C#": "C",
+				"C++": "A",
+				"C": "C"
+			}
+		};
+		var matrixDynamic = {
+		    type: "matrixdynamic",
+			dynamic: true,
+			addRowText: "Add language",
+			valueType: "array",
+			columns: [{
+			  name: "Language",
+			  field: "language",
+			  requiredChoices: [ "Javascript", "Html", "CSS", "Java", "Python", "PHP" ],
+			  choices: ["Javascript", "Html", "CSS", "Java", "Python", "PHP", "Ruby", "C++", "C", "Shell", "C#", "Objective-C", "R", "VimL", "Go", "Perl", "CoffeeScript", "TeX", "Swift", "Scala", "Emacs List", "Haskell", "Lua", "Clojure", "Matlab", "Arduino", "Makefile", "Groovy", "Puppet", "Rust", "PowerShell"],
+			  cellType: "dropdown",
+			  isRequired: true,
+			  hasOther: true,
+			  choicesOrder: "asc"
+			}, {
+			  name: "Experience",
+			  field: "experience",
+			  choices: ["One year or less", "From one two three years", "From three to five years", "More then five years"],
+			  cellType: "dropdown",
+			  isRequired: true
+			}],
+			isRequired: true,
+			name: "languages",
+			rowCount: 1,
+			title: "What programming languages do you know?",
+			maxQuestions: 8,
+			minQuestions: 6
+		};
+		var tca = {
+		    optionsType: "fields",
+			title: "Compétences acquises",
+			chooseText: "",
+			items : [
+				{ name: "Marc KAMGA Olivier", code: "MKO"},
+				{ name: "DAMTCHOU W.", code: "DW"},
+				{ name: "MBATCHOU Eric", code: "ME"},
+				{ name: "TSAGUE Faustin", code: "TF"},
+				{ name: "MEKUEKO Isaac", code: "MI"},
+				{ name: "KAMDOUM Charles", code: "KC"},
+				{ name: "LAH Faustin", code: "LF"}
+			],
+			values: {
+				fields: [ "Javascript", "Java", "Python", "CSS", "PHP", "Html" ],
+				valueField: "value",
+				choices: [
+					{ label: "Excellent", value: "A" },
+					{ label: "Très bien", value: "B" },
+					{ label: "Bien", value: "C" },
+					{ label: "Passable", value: "D" },
+					{ label: "Mauvais", value: "E" },
+					{ label: "Très Mauvais", value: "F" }
+				]
+			}
+		}
+        /*var survey = new Survey({
+			//valueType: "array",
+            questions : [
+                {
+                    text: "Mathématiques",
+                    name: "Maths"
+                },
+                {
+                    text: "Physiques Chimie et Technologie",
+                    name: "PCT"
+                },
+                {
+                    text: "SVT",
+                    name: "SVT",
+					defaultValue: "D"
+                },
+                {
+                    text: "EPS",
+                    name: "EPS",
+					defaultValue: "C"
+                }
+            ],
+            values: [
+                { label: "Excellent", value: "A" },
+                { label: "Très bien", value: "B" },
+                { label: "Bien", value: "C" },
+                { label: "Passable", value: "D" },
+                { label: "Mauvais", value: "E" },
+                { label: "Très Mauvais", value: "F" }
+            ],
+            answers : {}
+        });
+		var val = survey.getSelections();
+		survey.setStates({
+			EPS: "A",
+			"PCT": "A",
+			Maths: "A",
+			SVT: "A"
+		});
+		survey.setStates(["A", "B", "C", "D"]);*/
+		
+		
+		var surveys = new Surveys({ 
+		    steps: true,
+			mainHeight: 'same',
+			visibleSteps: true,
+			withSummary: true,
+			complete: function(ev) {
+			    var states = this.surveys.getStates();
+				var str = serializeToJSON(states, true);
+				alert(str);
+				console.log(serializeToJSON(states));
+			},
+			completeLabel: "Submit",
+			previousLabel : "Back",
+			previousShortcut: 'Ctrl+B',
+			nextShortcut: 'Ctrl+F',
+			values: [
+			    { label : "Red", value: "R"},
+				{ label: "Green", value: "G"},
+				{ label: "Yellow", value: "Y"}
+			],
+			items: [
+			matrixDynamic,
+			tca,
+			{
+			label: "Courses",
+			//valueType: "array",			
+            questions : [
+                {
+                    text: "Mathématiques",
+                    name: "Maths"
+                },
+                {
+                    text: "Physiques Chimie et Technologie",
+                    name: "PCT"
+                },
+                {
+                    text: "SVT",
+                    name: "SVT",
+					defaultValue: "D"
+                },
+                {
+                    text: "EPS",
+                    name: "EPS",
+					defaultValue: "C"
+                }
+            ],
+            values: [
+                { label: "Excellent", value: "A" },
+                { label: "Très bien", value: "B" },
+                { label: "Bien", value: "C" },
+                { label: "Passable", value: "D" },
+                { label: "Mauvais", value: "E" },
+                { label: "Très Mauvais", value: "F" }
+            ],
+            answers : {}
+        }, {
+			label: "Resources",
+			valueType: "array",
+			indexedValue : true,
+			labelField: "name",
+			nameField: "code",
+			defaultValue: 'J',
+			values: [ 
+				{ label: "Senior", value: "S" },
+				{ label: "Experienced", value: "E"},
+				{ label: "Junior", value: "J" }
+			],
+			items: [
+				{ name: "Marc KAMGA Olivier", code: "MKO"},
+				{ name: "DAMTCHOU W.", code: "DW"},
+				{ name: "MBATCHOU Eric", code: "ME"},
+				{ name: "TSAGUE Faustin", code: "TF"},
+				{ name: "MEKUEKO Isaac", code: "MI"},
+				{ name: "KAMDOUM Charles", code: "KC"},
+				{ name: "LAH Faustin", code: "LF"}
+			]
+		}, {
+		    label: "Functional traffic lights",
+			labelField: "name",
+			nameField: "code",
+			//defaultValue: 'G',
+			valueType: 'entries',
+			entryNameField: "quarter",
+			//entryValueField: "color",
+			entryValueField: "colors",
+			optionsType: 'checklist',
+			items: [
+			    { name: "Bonanjo", code: "BNJ"},
+				{ name: "Ndokoti", code: "NDK"},
+			],
+			help: { html: "<p>Pour chaque quartier, cochez les différentes couleurs qui sont fonctionelles c'est-à-dire les couleurs qui s'allument encore.</p>" }
+		}, {
+			label: 'Compétences (combobox)',
+			name: "skills",
+			headNameLabel: 'Langages de programmation',
+			headValueLabel: 'Niveaux',
+            values: [
+                { label: "Excellent", value: "A" },
+                { label: "Très bien", value: "B" },
+                { label: "Bien", value: "C" },
+                { label: "Passable", value: "D" },
+                { label: "Mauvais", value: "E" },
+                { label: "Très Mauvais", value: "F" }
+            ],			
+			optionsType: 'combobox',
+			items: [				
+				{ label: "Javascript", name: "js"},
+				{ label: "Typescript", name: "ts"},
+				{ label: "Python", name: "py"},
+				{ label: "Php", name: "php"},
+				{ label: "SQL", name: "sql"},
+				{ label: "Java", name: "java"},
+				{ label: ".Net C sharp", name: "C#"},
+				{ label: "C++", name: "C++"},
+				{ label: "Le langage C", name: "C"}
+			],
+			help: { html: "<p>Spécifiez pour chaque langage de programmation ci-dessus, un niveau de compétence.</p><p><b>Note</b>:</p><p>&nbsp;&nbsp;&nbsp;&nbsp;Pour chaque compétence, un niveau est requis.</p>" }
+		}
+		]});
+		surveys.setObject(s2);
+		//surveys.readonly = false;
+		//surveys.disabled = true;
+        </script>
+    </body>
+</html>
